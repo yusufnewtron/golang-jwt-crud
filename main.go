@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+	"strconv"
 	"swagger-gin/module/auth"
 	"swagger-gin/module/config"
 	"swagger-gin/module/controller"
@@ -16,8 +18,8 @@ import (
 
 // @BasePath /api/v1
 // @securityDefinitions.apikey token
-//@in header
-//@name Authorization
+// @in header
+// @name Authorization
 
 func main() {
 	config.ConnectDataBase()
@@ -51,7 +53,12 @@ func main() {
 			l.POST("/login", auth.Login)
 		}
 	}
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+
+	persisauth, _ := strconv.ParseBool(os.Getenv("PERSISTAUTHORIZATION"))
+
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler,
+		ginSwagger.PersistAuthorization(persisauth),
+		ginSwagger.DocExpansion(os.Getenv("DOCEXPANSION"))))
 	r.Run(":8080")
 
 }
