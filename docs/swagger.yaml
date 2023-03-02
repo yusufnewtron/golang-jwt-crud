@@ -1,0 +1,300 @@
+basePath: /api/v1
+definitions:
+  auth.loginRequest:
+    properties:
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  controller.Items:
+    properties:
+      createddate: {}
+      id:
+        example: 1
+        type: integer
+      itemname:
+        example: Book
+        type: string
+      price:
+        example: 5000
+        type: integer
+    type: object
+  dao.M_User:
+    properties:
+      fullname:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  dao.UserGetModel:
+    properties:
+      fullname:
+        type: string
+      id_user:
+        type: string
+      username:
+        type: string
+    type: object
+  utils.Respone:
+    properties:
+      data: {}
+      message:
+        example: Success
+        type: string
+      result:
+        example: true
+        type: boolean
+    type: object
+info:
+  contact: {}
+paths:
+  /item/delete-item/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: delete item
+      parameters:
+      - description: id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/utils.Respone'
+            type: array
+      security:
+      - token: []
+      summary: delete item
+      tags:
+      - item
+  /item/get-item:
+    get:
+      consumes:
+      - application/json
+      description: get item
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/controller.Items'
+            type: array
+      security:
+      - token: []
+      summary: get item
+      tags:
+      - item
+  /item/insert-item:
+    post:
+      consumes:
+      - application/json
+      description: insert item
+      parameters:
+      - description: Payload Body [RAW]
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controller.Items'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/utils.Respone'
+            type: array
+      security:
+      - token: []
+      summary: insert item
+      tags:
+      - item
+  /item/update-item:
+    put:
+      consumes:
+      - application/json
+      description: update item
+      parameters:
+      - description: Payload Body [RAW]
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/controller.Items'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/utils.Respone'
+            type: array
+      security:
+      - token: []
+      summary: update item
+      tags:
+      - item
+  /login/login:
+    post:
+      consumes:
+      - application/json
+      description: Login
+      parameters:
+      - description: Payload Body [RAW]
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/auth.loginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/utils.Respone'
+            type: array
+      summary: Login
+      tags:
+      - login
+  /m_user/delete-user/{id_user}:
+    delete:
+      consumes:
+      - application/json
+      description: delete user by id
+      parameters:
+      - description: id_user
+        in: path
+        name: id_user
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/utils.Respone'
+            type: array
+      security:
+      - token: []
+      summary: delete user by id
+      tags:
+      - m_user
+  /m_user/get-user:
+    get:
+      consumes:
+      - application/json
+      description: get user
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/utils.Respone'
+            type: array
+      security:
+      - token: []
+      summary: get user
+      tags:
+      - m_user
+  /m_user/get-user/{id_user}:
+    get:
+      consumes:
+      - application/json
+      description: get user by id
+      parameters:
+      - description: id_user
+        in: path
+        name: id_user
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/utils.Respone'
+            type: array
+      security:
+      - token: []
+      summary: get user by id
+      tags:
+      - m_user
+  /m_user/insert-user:
+    post:
+      consumes:
+      - application/json
+      description: insert user
+      parameters:
+      - description: Payload Body [RAW]
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dao.M_User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/utils.Respone'
+            type: array
+      security:
+      - token: []
+      summary: insert user
+      tags:
+      - m_user
+  /m_user/update-user:
+    put:
+      consumes:
+      - application/json
+      description: update user
+      parameters:
+      - description: Payload Body [RAW]
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/dao.UserGetModel'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/utils.Respone'
+            type: array
+      security:
+      - token: []
+      summary: udate user
+      tags:
+      - m_user
+securityDefinitions:
+  token:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
